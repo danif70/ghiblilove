@@ -1,4 +1,5 @@
 import React from 'react'
+import { register, logIn } from '../firebase/functionsFirebase'
 
 const LoginRegister = () => {
   return (
