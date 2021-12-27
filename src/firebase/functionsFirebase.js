@@ -3,7 +3,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 
 
 //Funcion para registro de usuarios nuevos
-export const register = ()=>{
+/* export const register = ()=>{
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -16,11 +16,11 @@ export const register = ()=>{
         const errorMessage = error.message;
         // ..
       });
-}
+} */
 
 
 //Funcion para ingreso de usuarios registrados
-export const logIn = () =>{
+/* export const logIn = () =>{
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -32,7 +32,7 @@ export const logIn = () =>{
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-}
+} */
 
 
   
