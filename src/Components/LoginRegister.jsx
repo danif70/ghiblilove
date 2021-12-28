@@ -2,58 +2,54 @@ import React, { useState } from 'react'
 import { Fragment } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { async } from '@firebase/util';
+import { auth } from '../firebase/firebaseConfig';
+
 
 const LoginRegister = () => {
 
-  const [email,setEmail]= useState('');
-  const [password,setPassword] = useState('');
+  const [registerEmail,setRegisterEmail]= useState('');
+  const [registerPassword,setRegisterPassword] = useState('');
   const [userName,setUserName]= useState('');
+  const [emailLogin, setEmailLogin] = useState('')
+  const [passwordLogin, setPasswordLogin] = useState('')
 
 //Funcion para registro de usuarios nuevos
-const register = ()=>{
-  console.log(userName, email, password);
-  /* const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    }); */
-} 
+const register = async (e)=>{
+  try { 
+    e.preventDefault()
+    const user = await createUserWithEmailAndPassword(
+      auth, 
+      registerEmail, 
+      registerPassword
+      );
+      console.log('user', userName)
+  } catch (error) {
+    console.log(error.message);
+  }
+    };
+
 
 //Funcion para ingreso de usuarios registrados
-/* const logIn = () =>{
-  const auth = getAuth();
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
-} 
- */
+/* const logIn = async () =>{
+  signInWithEmailAndPassword(auth, emailLogin, passwordLogin)
+    
+    }; */
+
+ 
 
   return (
     <Fragment>
-      <p>login</p>
-     {/*  <Form className="form-login">
+     {/*  <p>login</p>
+       <Form className="form-login">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control 
           type="email" 
           placeholder="Enter email"
-          value = {email}
-          onChange={(e)=>setEmail(e.target.value)}
+          value = {emailLogin}
+          onChange={(e)=>setEmailLogin(e.target.value)}
           />          
         </Form.Group>
 
@@ -62,17 +58,17 @@ const register = ()=>{
           <Form.Control 
           type="password" 
           placeholder="Password"
-          value = {password} 
-          onChange={(e)=>setPassword(e.target.value)}
+          value = {passwordLogin} 
+          onChange={(e)=>setPasswordLogin(e.target.value)}
           />
         </Form.Group>
         <Button 
         variant="primary" 
         type="submit"
-        onClick={()=>logIn(email,password)}>
+        onClick={()=>logIn(emailLogin,passwordLogin)}>
           Submit
         </Button>
-    </Form> */}
+    </Form>  */}
     <p>Register</p>
       <Form className="form-register">
       <Form.Group className="mb-3" controlId="formBasicName">
@@ -89,8 +85,8 @@ const register = ()=>{
           <Form.Control 
           type="email" 
           placeholder="Enter email"
-          value = {email} 
-          onChange={(e)=>setEmail(e.target.value)}
+          value = {registerEmail} 
+          onChange={(e)=>setRegisterEmail(e.target.value)}
           />          
         </Form.Group>
 
@@ -99,14 +95,14 @@ const register = ()=>{
           <Form.Control 
           type="password" 
           placeholder="Password" 
-          value = {password} 
-          onChange={(e)=>setPassword(e.target.value)}
+          value = {registerPassword} 
+          onChange={(e)=>setRegisterPassword(e.target.value)}
           />
         </Form.Group>        
         <Button 
         variant="primary" 
         type="submit"
-        onClick={()=>register(userName,email,password)}>
+        onClick={register}>
           Submit
         </Button>
     </Form>
