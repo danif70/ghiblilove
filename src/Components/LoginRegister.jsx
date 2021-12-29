@@ -2,18 +2,19 @@ import React, { useState } from 'react'
 import { Fragment } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { async } from '@firebase/util';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../firebase/firebaseConfig';
+import '../Styles/LoginRegister.css'
 
 
 const LoginRegister = () => {
 
-  const [registerEmail,setRegisterEmail]= useState('');
-  const [registerPassword,setRegisterPassword] = useState('');
-  const [userName,setUserName]= useState('');
-  const [emailLogin, setEmailLogin] = useState('')
-  const [passwordLogin, setPasswordLogin] = useState('')
+  const [registerEmail, setRegisterEmail]= useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+  const [userName, setUserName]= useState('');
+  const [emailLogin, setEmailLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
 //Funcion para registro de usuarios nuevos
 const register = async (e)=>{
@@ -24,7 +25,11 @@ const register = async (e)=>{
       registerEmail, 
       registerPassword
       );
-      console.log('user', userName)
+    updateProfile(auth.currentUser, {
+        displayName: userName,
+    });
+    setShowForm(false);
+    console.log('user', user)
   } catch (error) {
     console.log(error.message);
   }
@@ -32,18 +37,42 @@ const register = async (e)=>{
 
 
 //Funcion para ingreso de usuarios registrados
-/* const logIn = async () =>{
-  signInWithEmailAndPassword(auth, emailLogin, passwordLogin)
-    
-    }; */
+  const logIn = async (e) =>{
+    try{
+      e.preventDefault();
+      const user = await signInWithEmailAndPassword(
+        auth, 
+        emailLogin, 
+        passwordLogin
+        );
+        console.log('Login', user.user.displayName);
+        window.location.pathname = '/home';
+    } catch (error){
+      console.log(error.message);
+    }
+  };
+
+  //Función para registrarse con Google
+  const provider = new GoogleAuthProvider();
+  const registerGoogle = async () => {
+    try{
+      const user = await signInWithPopup(auth, provider);
+      /* const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken; */
+      window.location.pathname = '/home';
+      console.log(user);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
  
 
   return (
     <Fragment>
-     {/*  <p>login</p>
-       <Form className="form-login">
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+    {/* Aquí empieza el form de Login */}
+       <Form className={showForm ? "form-novisible" : "form-visible"}>
+        <Form.Group className="mb-3" controlId="formBasicEmail Login">
           <Form.Label>Email address</Form.Label>
           <Form.Control 
           type="email" 
@@ -53,7 +82,7 @@ const register = async (e)=>{
           />          
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicPassword Login">
           <Form.Label>Password</Form.Label>
           <Form.Control 
           type="password" 
@@ -65,12 +94,13 @@ const register = async (e)=>{
         <Button 
         variant="primary" 
         type="submit"
-        onClick={()=>logIn(emailLogin,passwordLogin)}>
+        onClick={logIn}>
           Submit
         </Button>
-    </Form>  */}
-    <p>Register</p>
-      <Form className="form-register">
+        <p onClick={()=>{setShowForm(true)}}>Not yet a member?</p>
+    </Form> 
+    {/* Aquí empieza el form de Registro */}
+      <Form className={showForm ? "form-visible" : "form-novisible"}>
       <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>User</Form.Label>
           <Form.Control 
@@ -103,8 +133,9 @@ const register = async (e)=>{
         variant="primary" 
         type="submit"
         onClick={register}>
-          Submit
+          Register
         </Button>
+        <p onClick={registerGoogle}>Google</p>
     </Form>
     </Fragment>
   )
