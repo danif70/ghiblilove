@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../firebase/firebaseConfig';
 import '../Styles/LoginRegister.css'
+import totoroHalf from '../img/totoroHalf.png'
 
 
 const LoginRegister = () => {
@@ -71,72 +72,79 @@ const register = async (e)=>{
   return (
     <Fragment>
     {/* Aquí empieza el form de Login */}
-       <Form className={showForm ? "form-novisible" : "form-visible"}>
-        <Form.Group className="mb-3" controlId="formBasicEmail Login">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control 
-          type="email" 
-          placeholder="Enter email"
-          value = {emailLogin}
-          onChange={(e)=>setEmailLogin(e.target.value)}
-          />          
-        </Form.Group>
+    <div className='login-register'>
+      <img src={totoroHalf} alt="totoroHalf" id='totoroHalf'/>
+    <div className='container-forms'>
+      <div className='forms'>
+        <Form className={showForm ? "form-novisible" : "form-visible"}>
+          <Form.Group className="mb-3" controlId="formBasicEmail Login">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control 
+            type="email" 
+            placeholder="Enter email"
+            value = {emailLogin}
+            onChange={(e)=>setEmailLogin(e.target.value)}
+            />          
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword Login">
-          <Form.Label>Password</Form.Label>
-          <Form.Control 
-          type="password" 
-          placeholder="Password"
-          value = {passwordLogin} 
-          onChange={(e)=>setPasswordLogin(e.target.value)}
-          />
-        </Form.Group>
-        <Button 
-        variant="primary" 
-        type="submit"
-        onClick={logIn}>
-          Submit
-        </Button>
-        <p onClick={()=>{setShowForm(true)}}>Not yet a member?</p>
-    </Form> 
-    {/* Aquí empieza el form de Registro */}
-      <Form className={showForm ? "form-visible" : "form-novisible"}>
-      <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Label>User</Form.Label>
-          <Form.Control 
-          type="Text" 
-          placeholder="User Name" 
-          value = {userName} 
-          onChange={(e)=>setUserName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control 
-          type="email" 
-          placeholder="Enter email"
-          value = {registerEmail} 
-          onChange={(e)=>setRegisterEmail(e.target.value)}
-          />          
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword Login">
+            <Form.Label>Password</Form.Label>
+            <Form.Control 
+            type="password" 
+            placeholder="Password"
+            value = {passwordLogin} 
+            onChange={(e)=>setPasswordLogin(e.target.value)}
+            />
+          </Form.Group>
+          <Button 
+          variant="primary" 
+          type="submit"
+          onClick={logIn}>
+            Submit
+          </Button>
+          <p onClick={()=>{setShowForm(true)}}>Not yet a member?</p>
+      </Form> 
+      {/* Aquí empieza el form de Registro */}
+        <Form className={showForm ? "form-visible" : "form-novisible"}>
+        <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>User</Form.Label>
+            <Form.Control 
+            type="Text" 
+            placeholder="User Name" 
+            value = {userName} 
+            onChange={(e)=>setUserName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control 
+            type="email" 
+            placeholder="Enter email"
+            value = {registerEmail} 
+            onChange={(e)=>setRegisterEmail(e.target.value)}
+            />          
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control 
-          type="password" 
-          placeholder="Password" 
-          value = {registerPassword} 
-          onChange={(e)=>setRegisterPassword(e.target.value)}
-          />
-        </Form.Group>        
-        <Button 
-        variant="primary" 
-        type="submit"
-        onClick={register}>
-          Register
-        </Button>
-        <p onClick={registerGoogle}>Google</p>
-    </Form>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control 
+            type="password" 
+            placeholder="Password" 
+            value = {registerPassword} 
+            onChange={(e)=>setRegisterPassword(e.target.value)}
+            />
+          </Form.Group>        
+          <Button 
+          variant="primary" 
+          type="submit"
+          onClick={register}>
+            Register
+          </Button>
+          <p onClick={registerGoogle}>Google</p>
+      </Form>
+      </div>
+    </div>
+    </div>
     </Fragment>
   )
 }
