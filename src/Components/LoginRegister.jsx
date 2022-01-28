@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { Fragment } from 'react'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../firebase/firebaseConfig';
-import '../Styles/LoginRegister.css'
+//import '../Styles/LoginRegister.css'
 import totoroHalf from '../img/totoroHalf.png'
+import { Input, Box, Text, Button, Container, Flex } from '@chakra-ui/react'
 
 
 const LoginRegister = () => {
@@ -16,6 +15,10 @@ const LoginRegister = () => {
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const [showForm, setShowForm] = useState(false);
+  const [show, setShow] = React.useState(false)
+  
+  
+  const handleClickPassword = () => setShow(!show)
 
 //Funcion para registro de usuarios nuevos
 const register = async (e)=>{
@@ -72,79 +75,76 @@ const register = async (e)=>{
   return (
     <Fragment>
     {/* Aquí empieza el form de Login */}
-    <div className='login-register'>
-      <img src={totoroHalf} alt="totoroHalf" id='totoroHalf'/>
-    <div className='container-forms'>
-      <div className='forms'>
-        <Form className={showForm ? "form-novisible" : "form-visible"}>
-          <Form.Group className="mb-3" controlId="formBasicEmail Login">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control 
-            type="email" 
-            placeholder="Enter email"
+      <Container>
+        {!showForm  ? (
+        <Container>
+          <Input 
+            justifyContent={'center'} 
+            width={'25%'} 
+            height={'20px'} 
+            placeholder='E-mail'
             value = {emailLogin}
-            onChange={(e)=>setEmailLogin(e.target.value)}
-            />          
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicPassword Login">
-            <Form.Label>Password</Form.Label>
-            <Form.Control 
-            type="password" 
-            placeholder="Password"
-            value = {passwordLogin} 
-            onChange={(e)=>setPasswordLogin(e.target.value)}
-            />
-          </Form.Group>
+            onChange={(e)=>setEmailLogin(e.target.value)}>
+          </Input>
+          <Input 
+            justifyContent={'center'} 
+            width={'25%'} 
+            height={'20px'} 
+            placeholder='Password' 
+            type={show ? 'text' : 'password'}
+            value = {passwordLogin}
+            onClick={handleClickPassword}
+            onChange={(e)=>setPasswordLogin(e.target.value)}>
+          </Input>
           <Button 
-          variant="primary" 
-          type="submit"
-          onClick={logIn}>
+            type="submit" 
+            onClick={logIn}>
             Submit
           </Button>
-          <p onClick={()=>{setShowForm(true)}}>Not yet a member?</p>
-      </Form> 
-      {/* Aquí empieza el form de Registro */}
-        <Form className={showForm ? "form-visible" : "form-novisible"}>
-        <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>User</Form.Label>
-            <Form.Control 
-            type="Text" 
+          <p onClick={()=>{setShowForm(true)}}>
+            Not yet a member?
+          </p>
+        </Container>
+        ):(
+        <Container type={showForm ? "form-visible" : "form-novisible"}>
+          <Input
+            justifyContent={'center'} 
+            width={'25%'} 
+            height={'20px'} 
             placeholder="User Name" 
             value = {userName} 
-            onChange={(e)=>setUserName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control 
-            type="email" 
+            onChange={(e)=>setUserName(e.target.value)}>
+          </Input>
+          <Input
+            justifyContent={'center'} 
+            width={'25%'} 
+            height={'20px'}
             placeholder="Enter email"
             value = {registerEmail} 
-            onChange={(e)=>setRegisterEmail(e.target.value)}
-            />          
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control 
-            type="password" 
+            onChange={(e)=>setRegisterEmail(e.target.value)}>
+          </Input>
+          <Input
+            justifyContent={'center'} 
+            width={'25%'} 
+            height={'20px'}
+            type={show ? 'text' : 'password'}
             placeholder="Password" 
             value = {registerPassword} 
-            onChange={(e)=>setRegisterPassword(e.target.value)}
-            />
-          </Form.Group>        
-          <Button 
-          variant="primary" 
-          type="submit"
-          onClick={register}>
-            Register
+            onClick={handleClickPassword}
+            onChange={(e)=>setRegisterPassword(e.target.value)}>
+          </Input>
+          <Button
+            type="submit"
+            onClick={register}>
+              Register
           </Button>
-          <p onClick={registerGoogle}>Google</p>
-      </Form>
-      </div>
-    </div>
-    </div>
+          <p onClick={()=>{setShowForm(false)}}>
+            Are you a member?
+          </p>
+          <Text onClick={registerGoogle}>Google</Text>
+        </Container>
+        )}
+      </Container>
     </Fragment>
   )
 }
