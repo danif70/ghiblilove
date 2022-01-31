@@ -90,16 +90,16 @@ const LoginRegister = () => {
           <VStack
             w="full"
             h="full"
-            p={5}
-            alignItems="end"
-            spacing={10}
+            alignItems={"flex-start"}
+            justifyContent={"flex-end"}
             bg="blue"
+           
           >
             <Image
               src={totoroHalf}
               alt="Half Tororo"
-              marginTop={"-3.5"}
-              marginRight={"26.5%"}
+              
+              
             ></Image>
           </VStack>
 
@@ -130,7 +130,7 @@ const LoginRegister = () => {
                 <Input
                   justifyContent={"center"}
                   width={"95%"}
-                  height={"10%"}
+                  height={"15%"}
                   bg="lightGray"
                   color="white"
                   borderRadius={"20"}
@@ -141,7 +141,7 @@ const LoginRegister = () => {
                 <Input
                   justifyContent={"center"}
                   width={"95%"}
-                  height={"10%"}
+                  height={"15%"}
                   bg="lightGray"
                   color="white"
                   borderRadius={"20"}
@@ -197,23 +197,31 @@ const LoginRegister = () => {
                   onChange={(e) => setRegisterEmail(e.target.value)}
                 ></Input>
                 <p color="white">PASSWORD</p>
-                <InputGroup justifyContent={"center"}
-                    width={"95%"}
-                    height={"25%"}
-                    borderColor={"blue"}
-                    color="white"
-                    >
+                <InputGroup
+                  justifyContent={"center"}
+                  width={"95%"}
+                  height={"23%"}
+                  borderColor={"blue"}
+                  color="white"
+                >
                   <Input
-                  height={"110%"}
-                  borderRadius={"20px"}
-                  bg="lightGray"
+                    height={"110%"}
+                    borderRadius={"20px"}
+                    bg="lightGray"
                     type={show ? "text" : "password"}
                     value={registerPassword}
-                   
                     onChange={(e) => setRegisterPassword(e.target.value)}
                   ></Input>
                   <InputRightElement h="90%" w="18%">
-                    <Button h="60%" marginRight={"20px"} marginTop={"5px"}  onClick={handleClickPassword} /* onClick={show ? "Hide" : "Show"} */ bg="white">X</Button>
+                    <Button
+                      h="60%"
+                      marginRight={"20px"}
+                      marginTop={"5px"}
+                      onClick={handleClickPassword}
+                      /* onClick={show ? "Hide" : "Show"} */ bg="white"
+                    >
+                      X
+                    </Button>
                   </InputRightElement>
                 </InputGroup>
                 <Button
